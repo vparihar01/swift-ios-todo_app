@@ -54,8 +54,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
       // Adjust it down by 20 points
       viewFrame.origin.y += 20
       
+      // Add in the "+" button at the bottom
+      let addButton = UIButton(frame: CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 44, UIScreen.mainScreen().bounds.size.width, 44))
+      addButton.setTitle("+", forState: .Normal)
+      addButton.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1.0)
+      addButton.addTarget(self, action: "addNewItem", forControlEvents: .TouchUpInside)
+      self.view.addSubview(addButton)
+      
       // decrease height by 30 points
-      viewFrame.size.height -= 30
+      viewFrame.size.height -= (20 + addButton.frame.size.height)
       
       // Set the todoTableView to our teomporary frame
       todoTableView.frame = viewFrame
@@ -134,9 +141,65 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
       
       //Tell the table view to animate out the row which is invoked to delete
       todoTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+      save()
     }
   }
   
+  let addItemAlertViewTag = 0
+  let addItemTextAlertViewTag = 1
+  func addNewItem() {
+    
+    var titlePrompt = UIAlertController(title: "Enter Title",
+      message: "Enter Text",
+      preferredStyle: .Alert)
+    
+    var titleTextField: UITextField?
+    titlePrompt.addTextFieldWithConfigurationHandler {
+      (textField) -> Void in
+      titleTextField = textField
+      textField.placeholder = "Title"
+    }
+    
+    titlePrompt.addAction(UIAlertAction(title: "Ok",
+      style: .Default,
+      handler: { (action) -> Void in
+        if let textField = titleTextField {
+          self.saveNewItem(textField.text)
+          println(textField.text)
+        }
+    }))
+    
+    self.presentViewController(titlePrompt,
+      animated: true,
+      completion: nil)
+    
+  }
+  
+  func saveNewItem(title : String) {
+    // Create the new  log item
+    var newToDoItem = ToDoItem.createInManagedObjectContext(self.managedObjectContext!, title: title, text: "")
+    
+    // Update the array containing the table view row data
+    self.fetchLog()
+    
+    // Animate in the new row
+    // Use Swift's find() function to figure out the index of the newLogItem
+    // after it's been added and sorted in our logItems array
+    if let newToDoIndex = find(todoItems, newToDoItem) {
+      // Create an NSIndexPath from the newItemIndex
+      let newToDoItemIndexPath = NSIndexPath(forRow: newToDoIndex, inSection: 0)
+      // Animate in the insertion of this row
+      todoTableView.insertRowsAtIndexPaths([ newToDoItemIndexPath ], withRowAnimation: .Automatic)
+      save()
+    }
+  }
+  
+  func save() {
+    var error : NSError?
+    if(managedObjectContext!.save(&error) ) {
+      println(error?.localizedDescription)
+    }
+  }
   
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
