@@ -14,6 +14,7 @@
 		382893DC1AB17D430080D0CB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 382893DB1AB17D430080D0CB /* Images.xcassets */; };
 		382893DF1AB17D430080D0CB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 382893DD1AB17D430080D0CB /* LaunchScreen.xib */; };
 		382893EB1AB17D430080D0CB /* MyTodoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382893EA1AB17D430080D0CB /* MyTodoTests.swift */; };
+		382893F51AB19F830080D0CB /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382893F41AB19F830080D0CB /* ToDoItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		382893E41AB17D430080D0CB /* MyTodoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyTodoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		382893E91AB17D430080D0CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		382893EA1AB17D430080D0CB /* MyTodoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTodoTests.swift; sourceTree = "<group>"; };
+		382893F41AB19F830080D0CB /* ToDoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				382893DB1AB17D430080D0CB /* Images.xcassets */,
 				382893DD1AB17D430080D0CB /* LaunchScreen.xib */,
 				382893D31AB17D430080D0CB /* MyTodo.xcdatamodeld */,
+				382893F41AB19F830080D0CB /* ToDoItem.swift */,
 				382893CF1AB17D430080D0CB /* Supporting Files */,
 			);
 			path = MyTodo;
@@ -217,6 +220,7 @@
 			files = (
 				382893D71AB17D430080D0CB /* ViewController.swift in Sources */,
 				382893D21AB17D430080D0CB /* AppDelegate.swift in Sources */,
+				382893F51AB19F830080D0CB /* ToDoItem.swift in Sources */,
 				382893D51AB17D430080D0CB /* MyTodo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

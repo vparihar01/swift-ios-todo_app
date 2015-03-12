@@ -13,5 +13,6 @@ class ToDoItem: NSManagedObject {
 
     @NSManaged var todoText: String
     @NSManaged var title: String
+    
 
 }
