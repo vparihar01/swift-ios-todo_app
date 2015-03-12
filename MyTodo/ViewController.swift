@@ -9,7 +9,9 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var todoItems = [ToDoItem]()
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext
 
@@ -35,30 +37,50 @@ class ViewController: UIViewController, UITableViewDataSource {
             for (todoTitle, todoText) in items {
                 ToDoItem.createInManagedObjectContext(moc, title: todoTitle, text: todoText)
             }
-        }
+        
         
         var viewFrame = self.view.frame
-        viewFrame.origin.y += 20
-        viewFrame.size.height -= 20
+        viewFrame.origin.y += 10
+        viewFrame.size.height -= 30
         todoTableView.frame = viewFrame
         self.view.addSubview(todoTableView)
         
         todoTableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "ToDoCell")
         todoTableView.dataSource = self
+        todoTableView.delegate = self
+            
+        }
+        fetchLog()
+    }
+    
+    func fetchLog() {
+        let fetchRequest = NSFetchRequest(entityName: "ToDoItem")
+        
+        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchRequest, error: nil) as? [ToDoItem]{
+            todoItems = fetchResults
+        }
         
     }
     
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return todoItems.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ToDoCell") as UITableViewCell
-        cell.textLabel?.text = "\(indexPath.row)"
+        
+        let todoItem = todoItems[indexPath.row]
+        cell.textLabel?.text = todoItem.title
+        println(todoItem.title)
         return cell
     }
     
-    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let todoItem = todoItems[indexPath.row]
+        
+        println(todoItem.title)
+    }
 //    override func viewDidAppear(animated: Bool) {
 //        super.viewDidAppear(animated)
 //        
